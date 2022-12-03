@@ -23,4 +23,15 @@ describe('testapp', () => {
     );
     assert.ok(account.greeting === "welcome to Calc");
   });
+  it('addes two number',async () => {
+    await program.rpc.add(new anchor.BN(2), new anchor.BN(3), {
+      accounts: {
+        calculator: calculator.publicKey
+      }
+    })
+    const account = await program.account.calculator.fetch(
+      calculator.publicKey
+    );
+    assert.ok(account.result.eq(new anchor.BN(5)));
+  })
 });
